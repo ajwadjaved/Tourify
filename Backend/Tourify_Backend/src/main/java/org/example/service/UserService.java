@@ -174,7 +174,7 @@ public class UserService {
         // Check whether the user's current address is close to the attraction
         double distance = calculateDistanceInMeter(userUpdateDTO.getLat(), userUpdateDTO.getLng(), Double.parseDouble(attractionDOdb.getCoordinates_lat()), Double.parseDouble(attractionDOdb.getCoordinates_lng()));
         // Check if distance is within 50 meters
-        System.out.println( distance + " Meters");
+//        System.out.println( distance + " Meters");
         if (distance > 50 ){
             throw new BusinessException(ResponseCode.PARAM_DISTANCE_TOO_LONG);
         }
@@ -336,17 +336,17 @@ public class UserService {
     // Check whether the time is 3333-01-01. if it is update, if not don't. just return the previous one.
     LocalDateTime checkWhetherUpdateTime(LocalDateTime localDateTime) {
         LocalDateTime dateTime = LocalDateTime.of(3333, 1, 1, 1, 0);
-        System.out.println("------------------------------");
-        System.out.println("localDateTime: "+localDateTime);
-        System.out.println("dateTime: "+dateTime);
+//        System.out.println("------------------------------");
+//        System.out.println("localDateTime: "+localDateTime);
+//        System.out.println("dateTime: "+dateTime);
         if (localDateTime.equals(dateTime)){
-            System.out.println("1111111");
+//            System.out.println("1111111");
             ZoneId newYorkZoneId = ZoneId.of("America/New_York");   // Set the ZoneId to New York
             return LocalDateTime.now(newYorkZoneId);   // Get the current date and time in New York time zone
 
         }
         else{
-            System.out.println("22222222");
+//            System.out.println("22222222");
             return localDateTime;
         }
 

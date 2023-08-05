@@ -106,10 +106,10 @@ public class AttractionService {
         String key = name_alias;
         if (locations.containsKey(key)) {
             int value = locations.get(key);
-            System.out.println("The value associated with key \"" + key + "\" is: " + value);
+//            System.out.println("The value associated with key \"" + key + "\" is: " + value);
             return value;
         } else {
-            System.out.println("No value is associated with key \"" + key + "\"");
+//            System.out.println("No value is associated with key \"" + key + "\"");
         }
         return null;
     }
@@ -152,7 +152,7 @@ public class AttractionService {
             // invoke the prediction method
             attractionPredictionVO.setBusinessRate(getModelPythonPrediction(attractionPredictionDTO, month, dayOfWeek, hour, attractionDO.getName_alias()));
             attractionPredictionVOList.add(attractionPredictionVO);
-            System.out.println("----------------------------------Finished one attraction's prediction----------------------------------");
+//            System.out.println("----------------------------------Finished one attraction's prediction----------------------------------");
         }
         return attractionPredictionVOList;
     }
@@ -160,7 +160,7 @@ public class AttractionService {
 
     // invoke the model and get prediction
     Float getModelPrediction(AttractionPredictionDTO attractionPredictionDTO, int month, int dayOfWeek, int hour, int taxiLocation, int passengersNum) throws BusinessException{
-        System.out.println("3.Starting to make prediction -------------");
+//        System.out.println("3.Starting to make prediction -------------");
         float[][] output = new float[0][];
         try (OrtEnvironment env = OrtEnvironment.getEnvironment();
              OrtSession.SessionOptions options = new OrtSession.SessionOptions()) {
@@ -185,7 +185,7 @@ public class AttractionService {
                 try (OrtSession.Result results = session.run(inputs)) {
                     // get the output
                     output = (float[][]) ((OnnxTensor) results.get(0)).getValue();
-                    System.out.println("3.Predicted result: " + output[0][0]);  // modify this to suit your output shape
+//                    System.out.println("3.Predicted result: " + output[0][0]);  // modify this to suit your output shape
                     return output[0][0];
                 }
             }
@@ -221,11 +221,11 @@ public class AttractionService {
         ZoneId newYorkZoneId = ZoneId.of("America/New_York");
         // Get the current date and time in New York time zone
         LocalDateTime localDateTimeInNewYork = LocalDateTime.now(newYorkZoneId);
-        System.out.println("localDateTimeInNewYork: " + localDateTimeInNewYork);
+//        System.out.println("localDateTimeInNewYork: " + localDateTimeInNewYork);
         predictionDays--;
-        localDateTimeInNewYork = localDateTimeInNewYork.plusDays(predictionDays);
+//        localDateTimeInNewYork = localDateTimeInNewYork.plusDays(predictionDays);
         System.out.println("--------------------------------------Starting a new prediction----------------------------------");
-        System.out.println("localDateTimeInNewYork: " + localDateTimeInNewYork);
+//        System.out.println("localDateTimeInNewYork: " + localDateTimeInNewYork);
 
 
 
@@ -260,25 +260,25 @@ public class AttractionService {
                 // Check Whether the time is inside the period
                 if (futureTimeRounded.isAfter(attractionOpen) && futureTimeRounded.isBefore(attractionClose)) {
                     OpenClose.add(true);
-                    System.out.println("111111111");
+//                    System.out.println("111111111");
                 } else {
                     OpenClose.add(false);
-                    System.out.println("222222222");
+//                    System.out.println("222222222");
                 }
             }
             else {  // null means the attraction is not open on that day, skip the conditional statement and directly add false
-                System.out.println("33333333");
-                System.out.println(attractionOpen);
-                System.out.println(attractionClose);
+//                System.out.println("33333333");
+//                System.out.println(attractionOpen);
+//                System.out.println(attractionClose);
                 OpenClose.add(false);
             }
             // Debugging print statement
-            System.out.println("i: " + i + "   futureDateTime:" + futureDateTime + "   hours:" + hours.get(i) +  "   OpenClose:" + OpenClose.get(i));
+//            System.out.println("i: " + i + "   futureDateTime:" + futureDateTime + "   hours:" + hours.get(i) +  "   OpenClose:" + OpenClose.get(i));
         }
-        System.out.println("Months: " + months);
-        System.out.println("Days of Week: " + daysOfWeek);
-        System.out.println("Hours: " + hours);
-        System.out.println("OpenClose: " + OpenClose);
+//        System.out.println("Months: " + months);
+//        System.out.println("Days of Week: " + daysOfWeek);
+//        System.out.println("Hours: " + hours);
+//        System.out.println("OpenClose: " + OpenClose);
         // Use monthsList to loop though to insert the attractionPredictionDetailVO(hour and business) into List (attractionPredictionDetailVOList)
         for (int i = 0; i < 24; i++) {
             // set the response VO
@@ -302,10 +302,10 @@ public class AttractionService {
 //            System.out.println("2.Preparing to predict. taxiLocation:"+predictionInternalResult.getTaxiLocation()+" passengersNum:"+ predictionInternalResult.getPassengersNum());
 
             // Get the prediction for one hour
-            System.out.println("2.Preparing to predict. months:"+months.get(i)+" daysOfWeek:"+ daysOfWeek.get(i)+" hour:" + hours.get(i));
+//            System.out.println("2.Preparing to predict. months:"+months.get(i)+" daysOfWeek:"+ daysOfWeek.get(i)+" hour:" + hours.get(i));
             attractionPredictionDetailVO.setBusinessRate(getModelPythonPrediction(attractionPredictionDTO, months.get(i), daysOfWeek.get(i), hours.get(i),attractionDO.getName_alias()));
             attractionPredictionDetailVOList.add(attractionPredictionDetailVO);
-            System.out.println("--------Finished " + i +  " hour of prediction");
+//            System.out.println("--------Finished " + i +  " hour of prediction");
         }
         attractionOnePredictionVO.setAttractionPredictionDetailVOList(attractionPredictionDetailVOList);
         return attractionOnePredictionVO;
@@ -389,9 +389,8 @@ public class AttractionService {
 
     // invoke the model api from python
     Integer getModelPythonPrediction(AttractionPredictionDTO attractionPredictionDTO, int month, int dayOfWeek, int hour, String name_alias) throws BusinessException{
-        System.out.println("3.Starting to invoke prediction on python service -------------");
+//        System.out.println("3.Starting to invoke prediction on python service -------------");
 
-        System.out.println(FLASK_IP);
         WebClient webClient = WebClient.create(FLASK_IP);
         int value = getInteger(name_alias);
 
@@ -413,10 +412,10 @@ public class AttractionService {
         Map<String, Integer> response = responseMono.block();
         if(response.containsKey("prediction")) {
             Integer predictionValue = response.get("prediction");
-            System.out.println("Prediction value: " + predictionValue);
+//            System.out.println("Prediction value: " + predictionValue);
             return predictionValue;
         } else {
-            System.out.println("The key 'prediction' does not exist in the map");
+//            System.out.println("The key 'prediction' does not exist in the map");
             return 0;
         }
     }
