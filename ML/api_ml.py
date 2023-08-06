@@ -15,7 +15,7 @@ app = Flask(__name__)
 def predict():
     try:
         json_ = request.json
-        print(json_)
+        # print(json_)
 
         # Extract the input parameters from the JSON data
         try:
@@ -93,5 +93,5 @@ if __name__ == '__main__':
     except:
         port = 12345  # If you don't provide any port, the port will be set to 12345
 
-    print('Models loaded')
+    # print('Models loaded')
     app.run(port=port, debug=True)
