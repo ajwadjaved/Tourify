@@ -389,8 +389,8 @@ public class AttractionService {
 
     // invoke the model api from python
     Integer getModelPythonPrediction(AttractionPredictionDTO attractionPredictionDTO, int month, int dayOfWeek, int hour, String name_alias) throws BusinessException{
-        System.out.println("3.Starting to invoke prediction on python service -------------------------------");
-        System.out.println("month: "+month+"dayOfWeek: "+dayOfWeek+"hour: "+hour);
+//        System.out.println("3.Starting to invoke prediction on python service -------------------------------");
+//        System.out.println("month: "+month+"dayOfWeek: "+dayOfWeek+"hour: "+hour);
 
         WebClient webClient = WebClient.create(FLASK_IP);
         int value = getInteger(name_alias);
@@ -413,7 +413,7 @@ public class AttractionService {
         Map<String, Integer> response = responseMono.block();
         if(response.containsKey("prediction")) {
             Integer predictionValue = response.get("prediction");
-            System.out.println("predictionValue: " + predictionValue);
+//            System.out.println("predictionValue: " + predictionValue);
 
 //            System.out.println("Prediction value: " + predictionValue);
             return predictionValue;
